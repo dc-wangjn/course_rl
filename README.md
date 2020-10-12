@@ -1,27 +1,12 @@
-## Setup
+## Homework description
 
-You can run this code on your own machine or on Google Colab. 
+I run ```Ant-v2``` and ```Walker2d-v2``` environment in DAgger and Behavior Cloning method.
 
-1. **Local option:** If you choose to run locally, you will need to install MuJoCo and some Python packages; see [installation.md](installation.md) for instructions.
-2. **Colab:** The first few sections of the notebook will install all required dependencies. You can try out the Colab option by clicking the badge below:
+Tensorboard files are located at /data directory.
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berkeleydeeprlcourse/homework_fall2020/blob/master/hw1/cs285/scripts/run_hw1.ipynb)
+I plot two pictures to compare the performance of above two methods and expert policy, which are located at /data directory.
 
-## Complete the code
 
-Fill in sections marked with `TODO`. In particular, see
- - [infrastructure/rl_trainer.py](cs285/infrastructure/rl_trainer.py)
- - [policies/MLP_policy.py](cs285/policies/MLP_policy.py)
- - [infrastructure/replay_buffer.py](cs285/infrastructure/replay_buffer.py)
- - [infrastructure/utils.py](cs285/infrastructure/utils.py)
- - [infrastructure/pytorch_util.py](cs285/infrastructure/pytorch_util.py)
-
-Look for sections maked with `HW1` to see how the edits you make will be used.
-Some other files that you may find relevant
- - [scripts/run_hw1.py](cs285/scripts/run_hw1.py) (if running locally) or [scripts/run_hw1.ipynb](cs285/scripts/run_hw1.ipynb) (if running on Colab)
- - [agents/bc_agent.py](cs285/agents/bc_agent.py)
-
-See the homework pdf for more details.
 
 ## Run the code
 
