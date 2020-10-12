@@ -127,16 +127,22 @@ class RL_Trainer(object):
             training_logs = self.train_agent()  # HW1: implement this function below
 
             # log/save
+            logs = []
             if self.log_video or self.log_metrics:
 
                 # perform logging
                 print('\nBeginning logging procedure...')
-                self.perform_logging(
-                    itr, paths, eval_policy, train_video_paths, training_logs)
+                log = self.perform_logging(
+                    itr, paths, eval_policy,expert_policy, train_video_paths, training_logs)
+                logs.append(log)
 
                 if self.params['save_params']:
                     print('\nSaving agent params')
                     self.agent.save('{}/policy_itr_{}.pt'.format(self.params['logdir'], itr))
+            f = open(self.params['logdir'],'wb')
+            pickle.dump(logs,f)
+            f.close()
+
 
     ####################################
     ####################################
@@ -166,11 +172,11 @@ class RL_Trainer(object):
 
                 # (2) collect `self.params['batch_size']` transitions
 
-        if itr == 0:
-            f = open(load_initial_expertdata , 'rb')
-            loaded_paths = pickle.load(f)
-            f.close()
-            return loaded_paths,0,None
+        # if itr == 0:
+        #     f = open(load_initial_expertdata , 'rb')
+        #     loaded_paths = pickle.load(f)
+        #     f.close()
+        #     return loaded_paths,0,None
 
 
         # TODO collect `batch_size` samples to be used for training
@@ -223,12 +229,16 @@ class RL_Trainer(object):
     ####################################
     ####################################
 
-    def perform_logging(self, itr, paths, eval_policy, train_video_paths, training_logs):
+    def perform_logging(self, itr, paths, eval_policy, expert_policy, train_video_paths, training_logs):
 
         # collect eval trajectories, for logging
         print("\nCollecting data for eval...")
         eval_paths, eval_envsteps_this_batch = utils.sample_trajectories(self.env, eval_policy, self.params['eval_batch_size'], self.params['ep_len'])
 
+        print("\nCollecting data for expert...")
+        expert_paths, expert_envsteps_this_batch = utils.sample_trajectories(self.env, expert_policy,
+                                                                         self.params['eval_batch_size'],
+                                                                         self.params['ep_len'])
         # save eval rollouts as videos in tensorboard event file
         if self.log_video and train_video_paths != None:
             print('\nCollecting video rollouts eval')
@@ -246,10 +256,13 @@ class RL_Trainer(object):
             # returns, for logging
             train_returns = [path["reward"].sum() for path in paths]
             eval_returns = [eval_path["reward"].sum() for eval_path in eval_paths]
+            expert_returns = [expert_path["reward"].sum() for expert_path in expert_paths]
 
             # episode lengths, for logging
             train_ep_lens = [len(path["reward"]) for path in paths]
             eval_ep_lens = [len(eval_path["reward"]) for eval_path in eval_paths]
+            expert_ep_lens = [len(expert_path["reward"]) for expert_path in expert_paths]
+
 
             # decide what to log
             logs = OrderedDict()
@@ -258,6 +271,12 @@ class RL_Trainer(object):
             logs["Eval_MaxReturn"] = np.max(eval_returns)
             logs["Eval_MinReturn"] = np.min(eval_returns)
             logs["Eval_AverageEpLen"] = np.mean(eval_ep_lens)
+
+            logs["Expert_AverageReturn"] = np.mean(expert_returns)
+            logs["Expert_StdReturn"] = np.std(expert_returns)
+            logs["Expert_MaxReturn"] = np.max(expert_returns)
+            logs["Expert_MinReturn"] = np.min(expert_returns)
+            logs["Expert_AverageEpLen"] = np.mean(expert_returns)
 
             logs["Train_AverageReturn"] = np.mean(train_returns)
             logs["Train_StdReturn"] = np.std(train_returns)
@@ -282,3 +301,5 @@ class RL_Trainer(object):
             print('Done logging...\n\n')
 
             self.logger.flush()
+
+            return logs
