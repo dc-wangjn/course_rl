@@ -81,7 +81,7 @@ class MLPPolicy(BasePolicy, nn.Module, metaclass=abc.ABCMeta):
             observation = obs[None]
 
         # TODO return the action that the policy prescribes
-        observation = observation.Tensor().to(ptu.device)
+        observation = torch.FloatTensor(observation).to(ptu.device)
         pred_action = self(observation).detach().cpu().numpy()
 
         return pred_action
