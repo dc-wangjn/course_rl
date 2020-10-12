@@ -88,6 +88,7 @@ class RL_Trainer(object):
         """
 
         # init vars at beginning of training
+        print('Dagger state:{}'.format(relabel_with_expert))
         self.total_envsteps = 0
         self.start_time = time.time()
 
