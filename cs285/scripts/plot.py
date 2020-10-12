@@ -9,11 +9,11 @@ def dict2array(dict_):
     std = [di['Eval_StdReturn'] for di in dict_]
     return avg, std
 
-bc_ant_pth = '../../data/q1_bc_ant_Ant-v2_12-10-2020_16-58-17/return.pkl'
-da_ant_pth = '../../data/q2_dagger_ant_Ant-v2_12-10-2020_16-42-01/return.pkl'
+bc_ant_pth = '../../data/q1_bc_ant_Ant-v2_12-10-2020_18-40-45/return.pkl'
+da_ant_pth = '../../data/q2_dagger_ant_Ant-v2_12-10-2020_18-41-38/return.pkl'
 
-bc_walk_pth = '../../data/q1_bc_walker_Walker2d-v2_12-10-2020_17-00-29/return.pkl'
-da_walk_pth = '../../data/q2_dagger_walker_Walker2d-v2_12-10-2020_17-02-06/return.pkl'
+bc_walk_pth = '../../data/q1_bc_walker_Walker2d-v2_12-10-2020_18-40-35/return.pkl'
+da_walk_pth = '../../data/q2_dagger_walker_Walker2d-v2_12-10-2020_18-40-18/return.pkl'
 
 ant_data = []
 walk_data = []
