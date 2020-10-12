@@ -96,7 +96,7 @@ def main():
     else:
         # Use this prefix when submitting. The auto-grader uses this prefix.
         logdir_prefix = 'q1_'
-        assert args.n_iter==1, ('Vanilla behavior cloning collects expert data just once (n_iter=1)')
+        # assert args.n_iter==1, ('Vanilla behavior cloning collects expert data just once (n_iter=1)')
 
     ## directory for logging
     data_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../data')
