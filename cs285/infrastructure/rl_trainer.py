@@ -216,7 +216,7 @@ class RL_Trainer(object):
 
         for path in paths:
             expert_action = expert_policy(torch.FloatTensor(path['observation']).to(ptu.device))
-            path['action'] = expert_action
+            path['action'] = expert_action.detach().cpu().nuimpy()
 
         return paths
 
