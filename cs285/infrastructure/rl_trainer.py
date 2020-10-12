@@ -139,7 +139,7 @@ class RL_Trainer(object):
                 if self.params['save_params']:
                     print('\nSaving agent params')
                     self.agent.save('{}/policy_itr_{}.pt'.format(self.params['logdir'], itr))
-            f = open(self.params['logdir'],'wb')
+            f = open(os.path.join(self.params['logdir'],'return.pkl'),'wb')
             pickle.dump(logs,f)
             f.close()
 
