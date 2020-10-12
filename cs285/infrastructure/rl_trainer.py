@@ -214,7 +214,7 @@ class RL_Trainer(object):
         # and replace paths[i]["action"] with these expert labels
 
         for path in paths:
-            expert_action = expert_policy(path['observation'])
+            expert_action = expert_policy(torch.FloatTensor(path['observation']).to(ptu.device))
             path['action'] = expert_action
 
         return paths
