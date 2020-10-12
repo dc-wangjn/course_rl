@@ -91,6 +91,7 @@ class RL_Trainer(object):
         print('Dagger state:{}'.format(relabel_with_expert))
         self.total_envsteps = 0
         self.start_time = time.time()
+        logs = []
 
         for itr in range(n_iter):
             print("\n\n********** Iteration %i ************"%itr)
@@ -129,7 +130,7 @@ class RL_Trainer(object):
             training_logs = self.train_agent()  # HW1: implement this function below
 
             # log/save
-            logs = []
+
             if self.log_video or self.log_metrics:
 
                 # perform logging
@@ -141,9 +142,9 @@ class RL_Trainer(object):
                 if self.params['save_params']:
                     print('\nSaving agent params')
                     self.agent.save('{}/policy_itr_{}.pt'.format(self.params['logdir'], itr))
-            f = open(os.path.join(self.params['logdir'],'return.pkl'),'wb')
-            pickle.dump(logs,f)
-            f.close()
+        f = open(os.path.join(self.params['logdir'],'return.pkl'),'wb')
+        pickle.dump(logs,f)
+        f.close()
 
 
     ####################################
